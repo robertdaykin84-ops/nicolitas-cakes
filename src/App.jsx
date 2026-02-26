@@ -271,10 +271,12 @@ function Hero({ theme }) {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      gsap.set('.hero-el', { willChange: 'transform, opacity' })
       gsap.fromTo(
         '.hero-el',
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: 'power3.out', delay: 0.3 }
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.9, stagger: 0.09, ease: 'power3.out', delay: 0.2,
+          onComplete: () => gsap.set('.hero-el', { willChange: 'auto' }) }
       )
     }, containerRef)
     return () => ctx.revert()
@@ -284,14 +286,16 @@ function Hero({ theme }) {
     <section
       ref={containerRef}
       className="relative flex items-end"
-      style={{ height: '100dvh', minHeight: 600, background: theme.dark }}
+      style={{ height: '100svh', minHeight: '600px', background: theme.dark }}
     >
       {/* Hero image */}
       <img
         src={theme.heroImage}
         alt="Artisan cakes freshly baked"
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ opacity: 0.65 }}
+        style={{ opacity: 0.65, willChange: 'transform' }}
+        fetchpriority="high"
+        loading="eager"
       />
       {/* Gradient overlay */}
       <div
@@ -300,10 +304,10 @@ function Hero({ theme }) {
       />
 
       {/* Content */}
-      <div className="relative z-10 w-full px-6 md:px-16 pb-16 md:pb-24 max-w-3xl">
+      <div className="relative z-10 w-full px-5 md:px-16 pb-10 md:pb-24 max-w-3xl">
         {/* Status pill */}
         <div
-          className="hero-el inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
+          className="hero-el inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4 md:mb-6"
           style={{ fontFamily: theme.monoFont, background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.15)' }}
         >
           <span className="pulse-dot w-2 h-2 rounded-full bg-green-400 inline-block" />
@@ -313,7 +317,7 @@ function Hero({ theme }) {
         {/* Hero line 1 */}
         <div
           className="hero-el text-white/90 leading-tight mb-1"
-          style={{ fontFamily: theme.headingFont, fontWeight: 800, fontSize: 'clamp(1.8rem, 5vw, 4rem)' }}
+          style={{ fontFamily: theme.headingFont, fontWeight: 800, fontSize: 'clamp(1.4rem, 5vw, 4rem)' }}
         >
           {theme.heroLine1}
         </div>
@@ -321,7 +325,7 @@ function Hero({ theme }) {
         {/* Hero line 2 — drama serif */}
         <div
           className="hero-el text-white leading-none mb-6"
-          style={{ fontFamily: theme.dramaFont, fontStyle: 'italic', fontWeight: 700, fontSize: 'clamp(4rem, 13vw, 10rem)', lineHeight: 0.9 }}
+          style={{ fontFamily: theme.dramaFont, fontStyle: 'italic', fontWeight: 700, fontSize: 'clamp(2.8rem, 13vw, 10rem)', lineHeight: 0.9 }}
         >
           {theme.heroLine2}
         </div>
@@ -329,13 +333,13 @@ function Hero({ theme }) {
         {/* Tagline */}
         <p
           className="hero-el text-white/65 mb-8 max-w-md"
-          style={{ fontFamily: theme.headingFont, fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', lineHeight: 1.6 }}
+          style={{ fontFamily: theme.headingFont, fontSize: 'clamp(0.82rem, 2.5vw, 1.1rem)', lineHeight: 1.6 }}
         >
           {theme.tagline}
         </p>
 
         {/* CTAs */}
-        <div className="hero-el flex flex-wrap gap-3">
+        <div className="hero-el flex flex-col sm:flex-row flex-wrap gap-3">
           <a
             href="https://bite.je"
             target="_blank"
@@ -398,7 +402,7 @@ function MenuSection({ theme, menuStyle }) {
 
 function MenuStyleA({ theme, activeTab, setActiveTab, items }) {
   return (
-    <section id="menu" className="py-20 px-6 md:px-16" style={{ background: theme.bg }}>
+    <section id="menu" className="py-12 md:py-20 px-5 md:px-16" style={{ background: theme.bg }}>
       <div className="max-w-3xl mx-auto">
         <div className="mb-10">
           <p className="text-xs tracking-widest uppercase mb-2" style={{ fontFamily: theme.monoFont, color: theme.accent }}>Our Menu</p>
@@ -464,7 +468,7 @@ function MenuStyleA({ theme, activeTab, setActiveTab, items }) {
 
 function MenuStyleB({ theme, activeTab, setActiveTab, items }) {
   return (
-    <section id="menu" className="py-20 px-6 md:px-16" style={{ background: theme.bg }}>
+    <section id="menu" className="py-12 md:py-20 px-5 md:px-16" style={{ background: theme.bg }}>
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-12">
           <h2 style={{ fontFamily: theme.headingFont, fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: theme.dark, lineHeight: 1.1 }}>
@@ -525,7 +529,7 @@ function MenuStyleB({ theme, activeTab, setActiveTab, items }) {
 
 function MenuStyleC({ theme, activeTab, setActiveTab, items }) {
   return (
-    <section id="menu" className="py-20 px-6 md:px-16" style={{ background: theme.bg }}>
+    <section id="menu" className="py-12 md:py-20 px-5 md:px-16" style={{ background: theme.bg }}>
       <div className="max-w-4xl mx-auto">
         <div className="mb-10">
           <p className="text-xs tracking-widest uppercase mb-2" style={{ fontFamily: theme.monoFont, color: theme.accent }}>Our Menu</p>
@@ -593,7 +597,7 @@ function MenuStyleC({ theme, activeTab, setActiveTab, items }) {
 
 function MenuStyleD({ theme, activeTab, setActiveTab, items }) {
   return (
-    <section id="menu" className="py-20 px-6 md:px-16" style={{ background: '#2d2b26' }}>
+    <section id="menu" className="py-12 md:py-20 px-5 md:px-16" style={{ background: '#2d2b26' }}>
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-2">
@@ -690,7 +694,7 @@ function Philosophy({ theme }) {
   const trailingWords = ['that', 'takes', 'twenty', 'years', 'to', 'perfect.']
 
   return (
-    <section ref={sectionRef} className="relative py-28 px-6 md:px-16 overflow-hidden" style={{ background: theme.philoBg }}>
+    <section ref={sectionRef} className="relative py-16 md:py-28 px-5 md:px-16 overflow-hidden" style={{ background: theme.philoBg }}>
       {/* Texture */}
       <div className="philo-texture absolute inset-0 w-full h-[130%] -top-[15%]" style={{ opacity: 0.07 }}>
         <img src={theme.philoTexture} alt="" className="w-full h-full object-cover" aria-hidden />
@@ -708,7 +712,7 @@ function Philosophy({ theme }) {
         {/* Hero statement */}
         <div
           className="philo-hero"
-          style={{ fontFamily: theme.dramaFont, fontStyle: 'italic', fontWeight: 700, fontSize: 'clamp(2.5rem, 7vw, 6rem)', lineHeight: 1.1, color: '#fff' }}
+          style={{ fontFamily: theme.dramaFont, fontStyle: 'italic', fontWeight: 700, fontSize: 'clamp(1.9rem, 7vw, 6rem)', lineHeight: 1.15, color: '#fff' }}
         >
           {heroWords.map((w, i) => (
             <span key={i} className="philo-word inline-block mr-[0.25em]">{w}</span>
@@ -768,7 +772,7 @@ function OurStory({ theme }) {
   }, [theme.key])
 
   return (
-    <section ref={sectionRef} id="story" className="py-20 px-6 md:px-16" style={{ background: theme.bg }}>
+    <section ref={sectionRef} id="story" className="py-12 md:py-20 px-5 md:px-16" style={{ background: theme.bg }}>
       <div className="max-w-5xl mx-auto">
         <div className="mb-16">
           <p className="text-xs tracking-widest uppercase mb-2" style={{ fontFamily: theme.monoFont, color: theme.accent }}>Our Story</p>
@@ -779,7 +783,7 @@ function OurStory({ theme }) {
 
         {STORY_PANELS.map((panel, i) => (
           <div key={i}>
-            <div className={`story-panel-${i} flex flex-col ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-10 md:gap-16 items-center py-12`}>
+            <div className={`story-panel-${i} flex flex-col ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 md:gap-16 items-center py-8 md:py-12`}>
               {/* Image */}
               <div className="w-full md:w-1/2 overflow-hidden rounded-4xl" style={{ aspectRatio: '4/3' }}>
                 <img
@@ -824,9 +828,9 @@ function OurStory({ theme }) {
 // ─────────────────────────────────────────────
 function OrderCTA({ theme }) {
   return (
-    <section className="py-20 px-6 md:px-16" style={{ background: theme.bg }}>
+    <section className="py-12 md:py-20 px-5 md:px-16" style={{ background: theme.bg }}>
       <div
-        className="relative max-w-3xl mx-auto rounded-4xl p-12 md:p-16 overflow-hidden text-center"
+        className="relative max-w-3xl mx-auto rounded-4xl p-8 md:p-16 overflow-hidden text-center"
         style={{ background: theme.dark }}
       >
         {/* Glow */}
@@ -839,7 +843,7 @@ function OrderCTA({ theme }) {
         </p>
         <h2
           className="text-white mb-4"
-          style={{ fontFamily: theme.dramaFont, fontStyle: 'italic', fontWeight: 700, fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', lineHeight: 1 }}
+          style={{ fontFamily: theme.dramaFont, fontStyle: 'italic', fontWeight: 700, fontSize: 'clamp(2rem, 6vw, 4.5rem)', lineHeight: 1.05 }}
         >
           Ready when you are.
         </h2>
@@ -870,11 +874,11 @@ function Footer({ theme }) {
   return (
     <footer
       id="visit"
-      className="rounded-t-5xl pt-16 pb-8 px-6 md:px-16"
+      className="rounded-t-5xl pt-12 md:pt-16 pb-8 px-5 md:px-16"
       style={{ background: theme.dark }}
     >
       <div className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-10 md:mb-16">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
@@ -979,7 +983,7 @@ function ThemeSwitcher({ current, onChange }) {
                 fontFamily: theme.monoFont,
                 background: current === t.key ? theme.accent : 'rgba(255,255,255,0.06)',
                 color: current === t.key ? '#fff' : 'rgba(255,255,255,0.6)',
-                border: 'none', cursor: 'pointer', minWidth: 150,
+                border: 'none', cursor: 'pointer', minWidth: 130,
               }}
             >
               <span className="w-2 h-2 rounded-full shrink-0" style={{ background: t.accent }} />
@@ -990,11 +994,11 @@ function ThemeSwitcher({ current, onChange }) {
       )}
       <button
         onClick={() => setOpen((v) => !v)}
-        className="btn-magnetic flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-bold text-white"
+        className="btn-magnetic flex items-center gap-2 px-3 py-2 md:px-4 md:py-2.5 rounded-full text-xs font-bold text-white"
         style={{ fontFamily: theme.monoFont, background: theme.dark, boxShadow: '0 4px 20px rgba(0,0,0,0.25)', border: `1px solid rgba(255,255,255,0.1)` }}
       >
         <span className="w-2 h-2 rounded-full" style={{ background: theme.accent }} />
-        <span>THEME {current}</span>
+        <span className="hidden sm:inline">THEME </span><span>{current}</span>
         <ChevronDown size={12} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
         <span className="btn-fill rounded-full" style={{ background: theme.accent + '33' }} />
       </button>
@@ -1024,7 +1028,7 @@ function MenuStylePicker({ current, onChange, theme }) {
                 fontFamily: theme.monoFont,
                 background: current === s ? theme.accent : 'rgba(255,255,255,0.06)',
                 color: current === s ? '#fff' : 'rgba(255,255,255,0.6)',
-                border: 'none', cursor: 'pointer', minWidth: 150,
+                border: 'none', cursor: 'pointer', minWidth: 130,
               }}
             >
               {s} · {MENU_STYLE_LABELS[s]}
@@ -1034,10 +1038,10 @@ function MenuStylePicker({ current, onChange, theme }) {
       )}
       <button
         onClick={() => setOpen((v) => !v)}
-        className="btn-magnetic flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-bold text-white"
+        className="btn-magnetic flex items-center gap-2 px-3 py-2 md:px-4 md:py-2.5 rounded-full text-xs font-bold text-white"
         style={{ fontFamily: theme.monoFont, background: theme.dark, boxShadow: '0 4px 20px rgba(0,0,0,0.25)', border: `1px solid rgba(255,255,255,0.1)` }}
       >
-        <span>MENU {current} · {MENU_STYLE_LABELS[current]}</span>
+        <span>MENU {current}</span><span className="hidden sm:inline"> · {MENU_STYLE_LABELS[current]}</span>
         <ChevronDown size={12} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
         <span className="btn-fill rounded-full" style={{ background: theme.accent + '33' }} />
       </button>
