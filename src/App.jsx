@@ -857,14 +857,6 @@ function OrderCTA({ theme }) {
             <span className="flex items-center gap-2">Order on bite.je <ExternalLink size={14} /></span>
             <span className="btn-fill rounded-full" style={{ background: 'rgba(255,255,255,0.2)' }} />
           </a>
-          <a
-            href="tel:+441534625477"
-            className="btn-magnetic inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-semibold text-sm"
-            style={{ fontFamily: theme.headingFont, background: 'rgba(255,255,255,0.1)', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}
-          >
-            <span className="flex items-center gap-2"><Phone size={14} /> +44 1534 625477</span>
-            <span className="btn-fill rounded-full" style={{ background: 'rgba(255,255,255,0.08)' }} />
-          </a>
         </div>
       </div>
     </section>
